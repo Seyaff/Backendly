@@ -46,9 +46,10 @@ const Signup = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("submit");
+    if (isPending) return;
     mutate(values, {
       onSuccess: (response) => {
+     
         toast("Successfull", {
           description: response.data.message,
         });

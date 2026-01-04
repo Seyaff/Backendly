@@ -1,3 +1,4 @@
+import { DashboardSkeleton } from "@/components/skeleton-loaders/dashboard-sekelton";
 import useAuth from "@/hooks/api/useAuth";
 import { Navigate, Outlet } from "react-router-dom";
 
@@ -7,7 +8,7 @@ const AuthLayout = () => {
   if (isLoading) {
     return (
       <div className="flex min-h-svh items-center justify-center">
-        Loading...
+        <DashboardSkeleton />
       </div>
     );
   }

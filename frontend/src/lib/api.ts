@@ -3,8 +3,6 @@ import API from "./axios-client";
 
 export const getCurrentUserQueryFn = async () => {
   const response = await API.get("/user/current");
-  console.log(response.data);
-
   return response.data;
 };
 

@@ -27,7 +27,7 @@ import { toast } from "sonner";
 import type { AxiosError } from "axios";
 
 const Signin = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { mutate, isPending } = useMutation({ mutationFn: loginMutationFn });
 
   const formSchema = z.object({
@@ -48,17 +48,16 @@ const Signin = () => {
     mutate(value, {
       onSuccess: (response) => {
         toast("Login successfull", {
-          description: response.data.message,
+          description: response?.message,
         });
 
-        navigate("/dashboard")
+        navigate("/dashboard");
       },
       onError: (error) => {
-        const err = error as AxiosError<any>
-        console.log(error)
+        const err = error as AxiosError<any>;
+
         toast("Something went wrong", {
-          description:
-            err?.response?.data?.message || "Please try again later",
+          description: err?.response?.data?.message || "Please try again later",
         });
       },
     });
@@ -79,9 +78,7 @@ const Signin = () => {
           <Card>
             <CardHeader>
               <CardTitle>Welcome back</CardTitle>
-              <CardDescription>
-                Login with your account details
-              </CardDescription>
+              <CardDescription>Login with your account details</CardDescription>
             </CardHeader>
             <CardContent>
               <Form {...form}>
