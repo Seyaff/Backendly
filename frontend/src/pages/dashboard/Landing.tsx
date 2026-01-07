@@ -3,7 +3,7 @@ import Main from "./Main";
 
 const Landing = () => {
   return (
-    <main className="w-full max-h-screen h-full">
+    <main className="">
       <Header />
       <Main />
     </main>

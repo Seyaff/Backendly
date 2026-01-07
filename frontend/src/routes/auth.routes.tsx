@@ -8,6 +8,8 @@ import {
 } from "./common/routes";
 import ProctectedRoute from "./protected.route";
 import NotFound from "@/pages/errors/NotFound";
+import AppLayout from "@/layout/app.layout";
+
 
 const AppRoutes = () => {
   return (
@@ -28,7 +30,7 @@ const AppRoutes = () => {
 
       {/* Protected routes */}
       <Route element={<ProctectedRoute />}>
-        <Route element={<BaseLayout />}>
+        <Route element={<AppLayout />}>
           {protectedRoutePaths.map((route) => (
             <Route key={route.path} {...route} />
           ))}

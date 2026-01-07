@@ -51,13 +51,14 @@ const Signup = () => {
       onSuccess: (response) => {
      
         toast("Successfull", {
-          description: response.data.message,
+          description: response?.message,
         });
 
         navigate("/dashboard");
       },
       onError: (error) => {
         const err = error as AxiosError<any>;
+      
         toast("Something went wrong", {
           description: err?.response?.data.message,
         });
@@ -81,7 +82,10 @@ const Signup = () => {
             <CardHeader>
               <CardTitle>Create an account</CardTitle>
               <CardDescription>
-                Create an account to unlock all features
+                Create an account to unlock all features or
+                <span className="ml-2 text-blue-300">
+                  <Link to={"/sign-in"}>sign in</Link>
+                </span>
               </CardDescription>
             </CardHeader>
             <CardContent>

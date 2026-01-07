@@ -3,7 +3,10 @@ import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { HTTPSTATUS } from "../config/http.config";
 import { loginSchema, registerSchema } from "../validation/auth.validation";
 import { loginService, registerService } from "../services/auth.service";
-import { setAuthenticationCookies } from "../utils/cookie";
+import {
+  clearAuthenticationCookies,
+  setAuthenticationCookies,
+} from "../utils/cookie";
 
 export const registerController = asyncHandler(
   async (req: Request, res: Response) => {
@@ -35,4 +38,10 @@ export const loginController = asyncHandler(
   }
 );
 
-
+export const logoutController = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    return clearAuthenticationCookies(res).status(HTTPSTATUS.OK).json({
+      message: "Session expired ! Please login",
+    });
+  }
+);

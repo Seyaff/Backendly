@@ -7,7 +7,7 @@ const AuthLayout = () => {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-svh items-center justify-center">
+      <div className="flex items-center justify-center">
         <DashboardSkeleton />
       </div>
     );

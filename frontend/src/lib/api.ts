@@ -11,8 +11,12 @@ export const registerMutationFn = async (value: registerType) => {
   return repsonse.data;
 };
 
-
 export const loginMutationFn = async (value: loginType) => {
   const response = await API.post("/auth/login", value);
   return response.data;
-}
+};
+
+export const logoutMutationFn = async () => {
+  const response = await API.post("/auth/logout");
+  return response.data;
+};

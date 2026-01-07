@@ -8,3 +8,11 @@ export type loginType = {
   email: string;
   password: string;
 };
+
+export type UserType = {
+  _id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
