@@ -1,24 +1,26 @@
 import { add, addMinutes } from "date-fns";
 
-export const calculateTimeInMilliseconds = (
+export const calculateExpirationDate = (
   expiresIn: string = "15m"
 ): Date => {
-  // Match number + unit (m = minutes, h = hours, d = days)
   const match = expiresIn.match(/^(\d+)([mhd])$/);
-  if (!match) throw new Error('Invalid format. Use "15m", "1h", or "2d".');
-  const [, value, unit] = match;
-  const expirationDate = new Date();
 
-  // Check the unit and apply accordingly
+  if (!match) {
+    throw new Error('Invalid format. Use "15m", "1h", or "30d".');
+  }
+
+  const [, value, unit] = match;
+  const amount = parseInt(value, 10);
+
   switch (unit) {
-    case "m": // minutes
-      return add(expirationDate, { minutes: parseInt(value) });
-    case "h": // hours
-      return add(expirationDate, { hours: parseInt(value) });
-    case "d": // days
-      return add(expirationDate, { days: parseInt(value) });
+    case "m":
+      return add(new Date(), { minutes: amount });
+    case "h":
+      return add(new Date(), { hours: amount });
+    case "d":
+      return add(new Date(), { days: amount });
     default:
-      throw new Error('Invalid unit. Use "m", "h", or "d".');
+      throw new Error("Invalid expiration unit");
   }
 };
 

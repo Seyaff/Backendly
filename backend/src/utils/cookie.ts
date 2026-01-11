@@ -1,25 +1,23 @@
 import { CookieOptions, Response } from "express";
 import { config } from "../config/app.config";
-import { calculateTimeInMilliseconds } from "./date-fns";
+import { calculateExpirationDate } from "./date-fns";
 
 type CookiePayloadType = {
   res: Response;
   authToken: string;
 };
 
-const defaults: CookieOptions = {
+const baseCookieOptions: CookieOptions = {
   httpOnly: true,
-  secure: config.NODE_ENV === "production",
-  sameSite: "lax",
+  secure: config.NODE_ENV === "production", // HTTPS only in prod
+  sameSite: "none", // REQUIRED for cross-origin auth
+  path: "/",
 };
 
-export const getCookiOptions = () => {
-  const expiresIn = config.JWT.EXPIRES_IN;
-  const expires = calculateTimeInMilliseconds(expiresIn);
+export const getCookieOptions = (): CookieOptions => {
   return {
-    ...defaults,
-    expires,
-    path: "/",
+    ...baseCookieOptions,
+    expires: calculateExpirationDate(config.JWT.EXPIRES_IN),
   };
 };
 
@@ -27,9 +25,9 @@ export const setAuthenticationCookies = ({
   res,
   authToken,
 }: CookiePayloadType): Response => {
-  return res.cookie("auth", authToken, getCookiOptions());
+  return res.cookie("auth", authToken, getCookieOptions());
 };
 
 export const clearAuthenticationCookies = (res: Response): Response => {
-  return res.clearCookie("auth");
+  return res.clearCookie("auth", getCookieOptions());
 };
