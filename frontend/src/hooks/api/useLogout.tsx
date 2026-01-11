@@ -11,7 +11,6 @@ const useLogout = () => {
     mutationKey: ["logout"],
     mutationFn: logoutMutationFn,
     onSuccess: (response) => {
-      console.log(response);
       queryClient.clear();
       toast("Logged out", {
         description: response.message,

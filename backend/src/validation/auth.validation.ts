@@ -8,6 +8,7 @@ export const emailSchema = z
   .max(255);
 
 export const passwordSchema = z.string().trim().min(4);
+export const verificationCodeSchema = z.string().trim().min(1).max(25);
 
 export const registerSchema = z.object({
   name: z.string().trim().min(1).max(255),
@@ -18,4 +19,8 @@ export const registerSchema = z.object({
 export const loginSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
+});
+
+export const verificationEmailSchema = z.object({
+  code: verificationCodeSchema,
 });

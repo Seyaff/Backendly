@@ -1,8 +1,16 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { HTTPSTATUS } from "../config/http.config";
-import { loginSchema, registerSchema } from "../validation/auth.validation";
-import { loginService, registerService } from "../services/auth.service";
+import {
+  loginSchema,
+  registerSchema,
+  verificationEmailSchema,
+} from "../validation/auth.validation";
+import {
+  loginService,
+  registerService,
+  verifyAccountService,
+} from "../services/auth.service";
 import {
   clearAuthenticationCookies,
   setAuthenticationCookies,
@@ -12,14 +20,12 @@ export const registerController = asyncHandler(
   async (req: Request, res: Response) => {
     const body = registerSchema.parse({ ...req.body });
 
-    const { user, authToken } = await registerService(body);
+    const { user } = await registerService(body);
 
-    return setAuthenticationCookies({ res, authToken })
-      .status(HTTPSTATUS.OK)
-      .json({
-        message: "Account created successfully",
-        user,
-      });
+    return res.status(HTTPSTATUS.OK).json({
+      message: "Account created successfully",
+      user,
+    });
   }
 );
 
@@ -43,5 +49,19 @@ export const logoutController = asyncHandler(
     return clearAuthenticationCookies(res).status(HTTPSTATUS.OK).json({
       message: "Session expired ! Please login",
     });
+  }
+);
+
+export const verifyAccountController = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const { code } = verificationEmailSchema.parse(req.body);
+
+    const { authToken } = await verifyAccountService(code);
+
+    return setAuthenticationCookies({ res, authToken })
+      .status(HTTPSTATUS.OK)
+      .json({
+        message: "Email verified successfully",
+      });
   }
 );

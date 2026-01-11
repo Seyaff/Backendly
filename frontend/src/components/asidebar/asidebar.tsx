@@ -32,6 +32,11 @@ const items = [
     url: "/dashboard",
     icon: Inbox,
   },
+  {
+    title: "Profile",
+    url: "/profile",
+    icon: User2,
+  },
 ];
 
 const Asidebar = () => {

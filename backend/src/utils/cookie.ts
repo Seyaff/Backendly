@@ -10,7 +10,7 @@ type CookiePayloadType = {
 const defaults: CookieOptions = {
   httpOnly: true,
   secure: config.NODE_ENV === "production",
-  sameSite: "none",
+  sameSite: "lax",
 };
 
 export const getCookiOptions = () => {

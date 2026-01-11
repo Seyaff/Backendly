@@ -6,6 +6,7 @@ export interface UserDocument extends Document {
   name: string;
   email: string;
   password: string;
+  isEmailVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(value: string): Promise<boolean>;
@@ -30,22 +31,24 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       required: true,
     },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-userSchema.pre(
-  "save",
-  async function (this: HydratedDocument<UserDocument>) {
-    if (this.isModified("password")) {
-      if (this.password) {
-        this.password = await hashValue(this.password);
-      }
+userSchema.pre("save", async function (this: HydratedDocument<UserDocument>) {
+  if (this.isModified("password")) {
+    if (this.password) {
+      this.password = await hashValue(this.password);
     }
   }
-);
+});
 
 userSchema.methods.comparePassword = async function (value: string) {
   return await comparePassword(value, this.password);

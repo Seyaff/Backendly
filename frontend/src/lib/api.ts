@@ -1,4 +1,4 @@
-import type { loginType, registerType } from "@/types/api.types";
+import type { loginType, registerType, verifyEmailType } from "@/types/api.types";
 import API from "./axios-client";
 
 export const getCurrentUserQueryFn = async () => {
@@ -20,3 +20,9 @@ export const logoutMutationFn = async () => {
   const response = await API.post("/auth/logout");
   return response.data;
 };
+
+
+export const verifyEmailMutationFn = async(code : verifyEmailType ) => {
+  const response = await API.post(`/auth/confirm-account` , code)
+  return response.data
+}
