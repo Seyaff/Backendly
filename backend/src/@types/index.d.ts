@@ -1,11 +1,13 @@
+// src/types/index.d.ts
 import { Types } from "mongoose";
-import { Multer } from "multer";
+import { File as MulterFile } from "multer"; 
 
 declare global {
   namespace Express {
     interface Request {
       user?: string | Types.ObjectId;
-      file?: Multer.File;pe
+      file?: MulterFile; // multer's File type
+      files?: MulterFile[] | { [fieldname: string]: MulterFile[] }; 
     }
   }
 }
