@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 
-// Authenticatin Middleware 
+// Authenticatin Middleware
 import { isAuthenticated } from "./middlewares/isAuthenticated.middleware";
 
 // Functions
@@ -16,9 +16,6 @@ import { config } from "./config/app.config";
 import { connectDatabase } from "./config/database.config";
 import { asyncHandler } from "./middlewares/asyncHandler.middleware";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
-import { ErrorCodeEnum } from "./enums/error-code.enum";
-import { HTTPSTATUS } from "./config/http.config";
-import { BadRequestException } from "./utils/appError";
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -37,7 +34,7 @@ app.use(
 app.get(
   "/",
   asyncHandler(async (req: Request, res: Response) => {
-   res.send("Hey !!!")
+    res.send("Hey !!!");
   })
 );
 

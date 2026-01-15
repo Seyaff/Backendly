@@ -20,8 +20,9 @@ export const registerController = asyncHandler(
   async (req: Request, res: Response) => {
     const body = registerSchema.parse({ ...req.body });
 
-    const { user } = await registerService(body);
+    const profilePicture = req?.file?.path || "https://res.cloudinary.com/dxlhe8c1e/image/upload/v1768419514/images/keewvpzcvdhehowiixgn.jpg"
 
+    const { user } = await registerService(body , profilePicture);
     return res.status(HTTPSTATUS.OK).json({
       message: "Account created successfully",
       user,

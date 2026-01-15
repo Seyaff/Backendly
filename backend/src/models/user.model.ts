@@ -1,12 +1,13 @@
 import mongoose, { Document, HydratedDocument, Schema } from "mongoose";
 import { comparePassword, hashValue } from "../utils/bcrypt";
-import { NextFunction } from "express";
 
 export interface UserDocument extends Document {
   name: string;
   email: string;
   password: string;
+  profilePicture?: string;
   isEmailVerified: boolean;
+  currentWorkspace: mongoose.Types.ObjectId | null;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(value: string): Promise<boolean>;
@@ -31,10 +32,18 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       required: true,
     },
+    profilePicture: {
+      type: String,
+      trim: true,
+    },
     isEmailVerified: {
       type: Boolean,
       default: false,
       required: true,
+    },
+    currentWorkspace: {
+      type: Schema.Types.ObjectId,
+      ref: "Workspace",
     },
   },
   {

@@ -18,7 +18,6 @@ const verificationSchema = new Schema<VerificationDocument>(
     userId: {
       type: Schema.Types.ObjectId,
       required: true,
-      unique: true,
       ref: "User",
     },
     code: {

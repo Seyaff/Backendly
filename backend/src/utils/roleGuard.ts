@@ -1,0 +1,1 @@
+// export const roleGuard = (role : string , permissions[]) => {}
