@@ -10,7 +10,7 @@ type CookiePayloadType = {
 const baseCookieOptions: CookieOptions = {
   httpOnly: true,
   secure: config.NODE_ENV === "production", // HTTPS only in prod
-  sameSite: "lax", // REQUIRED for cross-origin auth
+  sameSite: "none", // REQUIRED for cross-origin auth
   path: "/",
 };
 
