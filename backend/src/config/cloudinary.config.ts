@@ -1,5 +1,6 @@
-import "dotenv/config"
-import multer from "multer";
+import "dotenv/config";
+import multer , { FileFilterCallback } from "multer";
+import { Request } from "express";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import { config } from "./app.config";
@@ -26,10 +27,14 @@ const storage = new CloudinaryStorage({
 export const upload = multer({
   storage,
   limits: {
-    fileSize: 2 * 1024 * 1024, // 2MB
+    fileSize: 2 * 1024 * 1024,
     files: 1,
   },
-  fileFilter(req, file, callback) {
+  fileFilter(
+    req: Request,
+    file: Express.Multer.File,
+    callback: FileFilterCallback
+  ) {
     const isValid = /^image\/(jpe?g|png|webp)$/.test(file.mimetype);
 
     if (!isValid) {
