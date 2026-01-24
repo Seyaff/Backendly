@@ -51,17 +51,17 @@ const userSchema = new Schema<UserDocument>(
   }
 );
 
-userSchema.pre("save", async function (this: HydratedDocument<UserDocument>) {
-  if (this.isModified("password")) {
-    if (this.password) {
-      this.password = await hashValue(this.password);
-    }
-  }
-});
+// userSchema.pre("save", async function (this: HydratedDocument<UserDocument>) {
+//   if (this.isModified("password")) {
+//     if (this.password) {
+//       this.password = await hashValue(this.password);
+//     }
+//   }
+// });
 
-userSchema.methods.comparePassword = async function (value: string) {
-  return await comparePassword(value, this.password);
-};
+// userSchema.methods.comparePassword = async function (value: string) {
+//   return await comparePassword(value, this.password);
+// };
 
 userSchema.methods.omitPassword = function () {
   const userObject = this.toObject();
