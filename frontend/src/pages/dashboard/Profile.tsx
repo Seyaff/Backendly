@@ -19,7 +19,7 @@ const Profile = () => {
       {/* Header */}
       <div className="flex items-center gap-4 mb-6">
         <div className="w-16 h-16 flex items-center justify-center rounded-full bg-black text-white text-2xl font-bold">
-          <span>{user?.name.charAt(0)}</span>
+          <span>{user?.name?.charAt(0)}</span>
         </div>
 
         <div className="tracking-tight">

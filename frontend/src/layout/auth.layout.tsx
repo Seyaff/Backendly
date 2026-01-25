@@ -1,6 +1,5 @@
 import { DashboardSkeleton } from "@/components/skeleton-loaders/dashboard-sekelton";
 import useAuth from "@/hooks/api/useAuth";
-import { User } from "lucide-react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const AuthLayout = () => {
@@ -13,8 +12,6 @@ const AuthLayout = () => {
       </div>
     );
   }
-
-  // console.log(authData.user)
 
   if (!authData?.user) return <Outlet />;
 

@@ -11,7 +11,6 @@ import {
   Field,
   FieldDescription,
   FieldGroup,
-  FieldLabel,
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -112,19 +111,7 @@ export default function LoginForm({
                     </FormItem>
                   )}
                 />
-                {/* <Field>
-                  <div className="flex items-center">
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <a
-                      href="#"
-                      className="ml-auto text-sm underline-offset-4 hover:underline"
-                    >
-                      Forgot your password?
-                    </a>
-                  </div>
-                  <Input id="password" type="password" required />
-                </Field> */}
-
+             
                 <FormField
                   control={form.control}
                   name="password"
