@@ -1,8 +1,6 @@
 export enum DefaultWorkspaceRole {
-     MEMBER = "MEMBER",
+  MEMBER = "MEMBER",
   GUEST = "GUEST",
 }
 
-
-
-export type DefaultWorkspaceRoleType = typeof DefaultWorkspaceRole
+export type DefaultWorkspaceRoleType = typeof DefaultWorkspaceRole;

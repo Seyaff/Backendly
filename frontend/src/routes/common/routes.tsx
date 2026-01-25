@@ -5,6 +5,8 @@ import Dashboard from "@/pages/dashboard/Dashboard";
 import Landing from "@/pages/dashboard/Landing";
 import Profile from "@/pages/dashboard/Profile";
 import ConfirmAccount from "@/pages/auth/ConfirmAccount";
+import Workspace from "@/pages/workspace/Workspace";
+import WorkspaceSettings from "@/pages/workspace/Settings";
 
 export const authenticationRoutePaths = [
   { path: AUTH_ROUTES.LANDING, element: <Landing /> },
@@ -15,10 +17,9 @@ export const authenticationRoutePaths = [
 
 export const protectedRoutePaths = [
   { path: PROTECTED_ROUTES.DASHBOARD, element: <Dashboard /> },
-  {
-    path: PROTECTED_ROUTES.PROFILE,
-    element: <Profile />,
-  },
+  { path: PROTECTED_ROUTES.WORKSPACE, element: <Workspace /> },
+  { path: PROTECTED_ROUTES.WORKSPACE_SETTINGS, element: <WorkspaceSettings /> },
+  { path: PROTECTED_ROUTES.PROFILE, element: <Profile /> },
 ];
 
 export const baseRoutePaths = [

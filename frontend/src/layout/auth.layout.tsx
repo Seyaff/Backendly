@@ -1,5 +1,6 @@
 import { DashboardSkeleton } from "@/components/skeleton-loaders/dashboard-sekelton";
 import useAuth from "@/hooks/api/useAuth";
+import { User } from "lucide-react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const AuthLayout = () => {
@@ -13,11 +14,11 @@ const AuthLayout = () => {
     );
   }
 
-  if (authData?.user) {
-    return <Navigate to="/dashboard" replace />;
-  }
+  // console.log(authData.user)
 
-  return <Outlet />;
+  if (!authData?.user) return <Outlet />;
+
+  return <Navigate to={`/${authData?.user.currentWorkspaceSlug}`} replace />;
 };
 
 export default AuthLayout;

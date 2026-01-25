@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 // Route Paths
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
+import workspaceRoutes from "./routes/workspace.routes";
 
 // Authenticatin Middleware
 import { isAuthenticated } from "./middlewares/isAuthenticated.middleware";
@@ -40,6 +41,7 @@ app.get(
 
 app.use(`${BASE_PATH}/auth`, authRoutes);
 app.use(`${BASE_PATH}/user`, isAuthenticated, userRoutes);
+app.use(`${BASE_PATH}/workspaces`, isAuthenticated, workspaceRoutes);
 
 app.use(errorHandler);
 

@@ -14,6 +14,7 @@ import WorkspaceModel from "../models/workspace.model";
 import MemberModel from "../models/member.model";
 import { Roles } from "../enums/role.enum";
 import { MemberStatus } from "../enums/member-status.enum";
+import RoleModel from "../models/role.model";
 
 export const registerService = async (body: RegisterDTO  , file : string) => {
   const { name, email, password } = body;
@@ -30,6 +31,10 @@ export const registerService = async (body: RegisterDTO  , file : string) => {
     }
 
     const user = new UserModel({ name, email, password , profilePicture });
+     const ownerRole = await RoleModel.findOne({name : Roles.OWNER})
+    if(!ownerRole) {
+      throw new NotFoundException("Owner role not found")
+    }
 
     const account = new AccountModel({
       provider: ProviderEnum.EMAIL,
@@ -45,16 +50,18 @@ export const registerService = async (body: RegisterDTO  , file : string) => {
       description: "This is the first workspace being made in this account",
       members: {
         user: user._id,
-        role : Roles.OWNER
+        role : ownerRole._id
       },
     });
 
     await workspace.save({ session });
 
+   
+
     const member = new MemberModel({
       userId: user._id,
       workspaceId: workspace._id,
-      role : Roles.OWNER,
+      role : ownerRole._id,
       status : MemberStatus.ACTIVE
     });
 
@@ -79,7 +86,7 @@ export const registerService = async (body: RegisterDTO  , file : string) => {
     });
 
     const newUser = user.omitPassword();
-    user.currentWorkspace = workspace._id
+    user.currentWorkspaceSlug = workspace.slug
     await user.save({session})
     
 

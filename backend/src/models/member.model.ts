@@ -1,11 +1,13 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { MemberStatus } from "../enums/member-status.enum";
 import { Roles, RoleType } from "../enums/role.enum";
+import { RoleDocument } from "./role.model";
+import { Types } from "mongoose";
 
 export interface MemberDocument extends Document {
-  userId: Schema.Types.ObjectId;
-  workspaceId: Schema.Types.ObjectId;
-  role: RoleType;
+  userId: Types.ObjectId;
+  workspaceId: Types.ObjectId;
+  role: RoleDocument;
   status: MemberStatus;
   joinedAt?: Date;
   invitedAt?: Date;
@@ -18,22 +20,21 @@ export interface MemberDocument extends Document {
 const memberSchema = new Schema<MemberDocument>(
   {
     userId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
       // index: true, // optional, helps queries by user
     },
     workspaceId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Workspace",
       required: true,
       // index: true, // optional, helps queries by workspace
     },
     role: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Role",
       required: true,
-      trim: true,
-      enum: Object.values(Roles),
     },
     status: {
       type: String,
@@ -58,7 +59,7 @@ const memberSchema = new Schema<MemberDocument>(
   },
   {
     timestamps: true, // createdAt & updatedAt
-  }
+  },
 );
 
 // ✅ Compound unique index to prevent duplicate members in the same workspace

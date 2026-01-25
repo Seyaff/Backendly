@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 import { Document } from "mongoose";
 import { randomInviteCodeGenerator, randomSlugGenerator } from "../utils/uuid";
 import { Roles, RoleType } from "../enums/role.enum";
@@ -13,7 +13,7 @@ import {
 import { TaskPriority, TaskStatus } from "../enums/task.enum";
 
 export interface WorkspaceDocument extends Document {
-  owner: Schema.Types.ObjectId;
+  owner:Types.ObjectId;
 
   name: string;
   description?: string;
@@ -24,7 +24,7 @@ export interface WorkspaceDocument extends Document {
 
   members: {
     user: Schema.Types.ObjectId;
-    role: RoleType;
+    role: Schema.Types.ObjectId;
     joinedAt: Date;
   }[];
 
@@ -106,8 +106,8 @@ const workspaceSchema = new Schema<WorkspaceDocument>(
           required: true,
         },
         role: {
-          type: String,
-          enum: Object.values(Roles),
+          type: Schema.Types.ObjectId,
+          ref : "Role",
           required: true,
         },
         joinedAt: {

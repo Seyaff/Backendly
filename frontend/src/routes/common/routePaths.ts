@@ -10,8 +10,10 @@ export const AUTH_ROUTES = {
 };
 
 export const PROTECTED_ROUTES = {
+  WORKSPACE_SETTINGS : "/:workspaceSlug/settings" ,
   DASHBOARD: "/dashboard",
   PROFILE: "/profile",
+  WORKSPACE: "/:workspaceId"
 };
 
 export const BASE_ROUTES = {

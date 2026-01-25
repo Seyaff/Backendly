@@ -7,7 +7,7 @@ export interface UserDocument extends Document {
   password: string;
   profilePicture?: string;
   isEmailVerified: boolean;
-  currentWorkspace: mongoose.Types.ObjectId | null;
+  currentWorkspaceSlug: string;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(value: string): Promise<boolean>;
@@ -41,27 +41,27 @@ const userSchema = new Schema<UserDocument>(
       default: false,
       required: true,
     },
-    currentWorkspace: {
-      type: Schema.Types.ObjectId,
-      ref: "Workspace",
+    currentWorkspaceSlug: {
+      type: String,
+      trim: true,
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-// userSchema.pre("save", async function (this: HydratedDocument<UserDocument>) {
-//   if (this.isModified("password")) {
-//     if (this.password) {
-//       this.password = await hashValue(this.password);
-//     }
-//   }
-// });
+userSchema.pre("save", async function (this: HydratedDocument<UserDocument>) {
+  if (this.isModified("password")) {
+    if (this.password) {
+      this.password = await hashValue(this.password);
+    }
+  }
+});
 
-// userSchema.methods.comparePassword = async function (value: string) {
-//   return await comparePassword(value, this.password);
-// };
+userSchema.methods.comparePassword = async function (value: string) {
+  return await comparePassword(value, this.password);
+};
 
 userSchema.methods.omitPassword = function () {
   const userObject = this.toObject();

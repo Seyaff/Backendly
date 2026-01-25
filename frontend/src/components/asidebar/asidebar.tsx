@@ -1,136 +1,172 @@
-import { Link } from "react-router-dom";
-import Logo from "../logo";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
+  SidebarRail,
 } from "../ui/sidebar";
-import { Separator } from "../ui/separator";
-import { ChevronUp, Inbox, Loader, LogOut, User2 } from "lucide-react";
+
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
-import { useState } from "react";
-import { useAuthContext } from "@/context/auth.provider";
-import useLogout from "@/hooks/api/useLogout";
+  AudioWaveform,
+  BookOpen,
+  Bot,
+  Command,
+  Frame,
+  GalleryVerticalEnd,
+  Map,
+  PieChart,
+  Settings2,
+  SquareTerminal,
+} from "lucide-react";
 
-const items = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: Inbox,
-  },
-  {
-    title: "Profile",
-    url: "/profile",
-    icon: User2,
-  },
-];
+import TeamSwitcher from "./team-switcher";
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
 
-const Asidebar = () => {
-  const { isLoading, user } = useAuthContext();
-  const { open } = useSidebar();
-  const [, setIsOpen] = useState(false);
-
-  const { mutate: logout } = useLogout();
+const Asidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
+  const data = {
+    user: {
+      name: "shadcn",
+      email: "m@example.com",
+      avatar: "/avatars/shadcn.jpg",
+    },
+    teams: [
+      {
+        name: "Acme Inc",
+        logo: GalleryVerticalEnd,
+        plan: "Enterprise",
+      },
+      {
+        name: "Acme Corp.",
+        logo: AudioWaveform,
+        plan: "Startup",
+      },
+      {
+        name: "Evil Corp.",
+        logo: Command,
+        plan: "Free",
+      },
+    ],
+    navMain: [
+      {
+        title: "Playground",
+        url: "#",
+        icon: SquareTerminal,
+        isActive: true,
+        items: [
+          {
+            title: "History",
+            url: "#",
+          },
+          {
+            title: "Starred",
+            url: "#",
+          },
+          {
+            title: "Settings",
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: "Models",
+        url: "#",
+        icon: Bot,
+        items: [
+          {
+            title: "Genesis",
+            url: "#",
+          },
+          {
+            title: "Explorer",
+            url: "#",
+          },
+          {
+            title: "Quantum",
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: "Documentation",
+        url: "#",
+        icon: BookOpen,
+        items: [
+          {
+            title: "Introduction",
+            url: "#",
+          },
+          {
+            title: "Get Started",
+            url: "#",
+          },
+          {
+            title: "Tutorials",
+            url: "#",
+          },
+          {
+            title: "Changelog",
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: "Settings",
+        url: "#",
+        icon: Settings2,
+        items: [
+          {
+            title: "General",
+            url: "#",
+          },
+          {
+            title: "Team",
+            url: "#",
+          },
+          {
+            title: "Billing",
+            url: "#",
+          },
+          {
+            title: "Limits",
+            url: "#",
+          },
+        ],
+      },
+    ],
+    projects: [
+      {
+        name: "Design Engineering",
+        url: "#",
+        icon: Frame,
+      },
+      {
+        name: "Sales & Marketing",
+        url: "#",
+        icon: PieChart,
+      },
+      {
+        name: "Travel",
+        url: "#",
+        icon: Map,
+      },
+    ],
+  };
 
   return (
-    <Sidebar>
+    <Sidebar  collapsible="icon" {...props}>
       <SidebarHeader>
-        <div className="flex gap-2 h-12.5 items-center justify-start w-full px-1">
-          <Logo />
-          {open && <Link to={"/"}>Backendly</Link>}
-        </div>
+        <TeamSwitcher  />
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <Separator />
-          <SidebarGroupLabel>Nomralities</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <NavMain items={data.navMain} />
+        <NavProjects projects={data.projects} />
       </SidebarContent>
-      <SidebarFooter className="outline-none focus:outline-none border-none">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            {isLoading ? (
-              <Loader
-                size="24px"
-                className="place-self-center self-center animate-spin"
-              />
-            ) : (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton
-                    size="lg"
-                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                  >
-                    <div className="flex items-center justify-center gap-2 ">
-                      <User2 size={24} />{" "}
-                      <div className="flex flex-col items-start">
-                        <span className="font-semibold tracking-tight leading-none">
-                          {user?.name}
-                        </span>
-                        <span className="text-[12px]">Free</span>
-                      </div>
-                    </div>
-                    <ChevronUp className="ml-auto" />
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                  side={"bottom"}
-                  align="start"
-                  sideOffset={4}
-                >
-                  <DropdownMenuItem>
-                    <span>Account</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <span>Billing</span>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setIsOpen(true);
-                      logout();
-                    }}
-                  >
-                    <LogOut />
-                    Log out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
-          </SidebarMenuItem>
-        </SidebarMenu>
+      <SidebarFooter>
+        <NavUser  />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 };

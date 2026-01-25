@@ -14,7 +14,7 @@ const Main = () => {
         {/* Headline */}
         <h1 className="mx-auto max-w-4xl text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
           Scalable backends.
-          <span className="block bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+          <span className="block bg-linear-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             Scale beyond your limits
           </span>
         </h1>
@@ -82,7 +82,7 @@ const Main = () => {
           </div>
 
           {/* Centered controlled glow */}
-          <div className="pointer-events-none absolute left-1/2 transform -translate-x-1/2 -bottom-24 h-64 w-[200%] max-w-[2000px] bg-gradient-to-r from-primary/20 via-primary/10 to-transparent blur-3xl" />
+          <div className="pointer-events-none absolute left-1/2 transform -translate-x-1/2 -bottom-24 h-64 w-[200%] max-w-500 bg-linear-to-r from-primary/20 via-primary/10 to-transparent blur-3xl" />
 
         </div>
       </div>
